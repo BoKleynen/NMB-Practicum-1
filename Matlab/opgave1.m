@@ -1,5 +1,20 @@
 N = 5;
-f1 = @(x,y) zeros(size(x));
-u1 = @(x) 1;
-U = PDE(f1, N, u1, u1, u1, u1)
-
+f = @(x,y) zeros(size(x));
+uw = @(y) 1;
+uo = @(y) 1;
+uz = @(x) 1;
+un = @(x) 1;
+U1 = PDE(f, N, uw, uo, uz, un)
+f = @(x,y) zeros(size(x));
+uw = @(y) 1+y;
+uo = @(y) 2+y;
+uz = @(x) 1+x;
+un = @(x) 2+x;
+U2 = PDE(f, N, uw, uo, uz, un)
+N = 5;
+f = @(x,y) 4*ones(size(x));
+uw = @(y) y.^2;
+uo = @(y) 1+y.^2;
+uz = @(x) x.^2;
+un = @(x) 1+x.^2;
+U3 = PDE(f, N, uw, uo, uz, un)
