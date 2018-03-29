@@ -1,12 +1,12 @@
 function [U] = PDE(f, N, u_w, u_o, u_z, u_n)
    h = 1/(N+1);
    
-   [F, ~] = meshgrid(h:h:1-h);
-   F = f(F)*h^2;
-   F(1,:) = F(1,:) - u_w(0:h:N);
-   F(N,:) = F(N,:) - u_o(0:h:N);
-   F(:,1) = F(:,1) - u_z(0:h:N)';
-   F(:,N) = F(:,N) - u_n(0:h:N)';
+   [X, Y] = meshgrid(h:h:1-h);
+   F = f(X, Y)*h^2;
+   F(1,:) = F(1,:) - u_w(h:h:1-h);
+   F(N,:) = F(N,:) - u_o(h:h:1-h);
+   F(:,1) = F(:,1) - u_z(h:h:1-h)';
+   F(:,N) = F(:,N) - u_n(h:h:1-h)';
    dstF = dst(dst(F')');
    dstU = zeros(N,N);
    
