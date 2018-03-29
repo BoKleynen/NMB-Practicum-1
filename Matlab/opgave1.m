@@ -1,4 +1,4 @@
-N = 10;
-f = @(x) 0;
+N = 5;
+f = @(x) zeros(size(x));
 u = @(x) 1;
 U = PDE(f, N, u, u, u, u)
