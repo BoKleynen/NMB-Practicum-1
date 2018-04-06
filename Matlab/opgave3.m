@@ -8,7 +8,7 @@ U = PDE(@f, N, uw, uo, uz, un);
 h = 1/(N+1);
 [X, Y] = meshgrid(h:h:1-h);
 surf(X, Y, U)
-contour(X,Y,U)
+% contour(X,Y,U)
 
 function z = f(x, y)
     temp = (0.4 <= x) & (x <= 0.6) & (0.4 <= y) & (y <= 0.6);
