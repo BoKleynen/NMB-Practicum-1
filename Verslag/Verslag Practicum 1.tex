@@ -7,6 +7,11 @@
 \usepackage{siunitx}
 \usepackage{listings}
 \usepackage{physics}
+\usepackage[dutch]{babel}
+
+
+\usepackage{hyperref}
+\hypersetup{pdfborder={0 0 0}}
 
 % Commands and stuff
 \newcommand{\opgave}[1]{\subsection{Opgave #1}}
@@ -35,26 +40,50 @@
 % List of figures
 \listoffigures
 \addcontentsline{toc}{section}{\numberline{} Lijst van Figuren}
+
+% List of Tables
+\listoftables
+\addcontentsline{toc}{section}{\numberline{} Lijst van Tabellen}
 \cleardoublepage
+
+
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
 % PDE stuff
 \section{Partial Differential Equations}\label{sec:PDE}
-De eerste opgaven ivm PDE. \\
-Vergelijking \ref{eq:PDE} werd opgelost aan de hand van het algoritme in sectie \ref{sec:pde}
+Voor de eerste opgaven werd de Poisson vergelijking numeriek opgelost als randvoorwaarde probleem. Het de implementatie van het algoritme werd in Matlab geschreven en is te vinden op pagina \pageref{sec:pde}.
 
-\begin{equation}\label{eq:PDE}
-	\pdv[2]{u(x,y)}{x} + \pdv[2]{u(x,y)}{y} = f(x,y)
+Vergelijking \ref{eq:poisson} toont de wiskundige formulering van het randvoorwaardeprobleem.
+\begin{equation}\label{eq:poisson}
+	\pdv[2]{u(x,y)}{x} + \pdv[2]{u(x,y)}{y} = f(x,y) \quad met (x,y) \in D = [ \, 0,1 ]\, \times [ \, 0,1 ]\,
 \end{equation}
-\opgave{1: Implementatie en controle}\label{sec:oef1}
+Met als randen:
+\begin{equation}\nonumber
+	u_w(y) = u(0,y), \quad u_o = u(1,y), \quad u_z = u(x,0) \quad en \quad u_n = u(x,1)
+\end{equation}
 
+% OPGAVE 1
+\opgave{1: Implementatie en controle}\label{sec:oef1}
+Zoals vermeld in sectie \ref{sec:PDE} werd de Poisson vergelijking \ref{eq:poisson} opgelost aan de hand van de Matlab code op pagina \pageref{sec:pde}.
+De implementatie werd getest aan de hand van volgende input vergelijkingen u(x,y):
+\begin{equation}\nonumber
+	u(x,y) = 1,\quad u(x,y) = 1 + x + y \quad en \quad u(x,y) = x^2 +y^2
+\end{equation}
+Deze vergelijkingen werden opgelost in het Matlab bestand opgave1.m, te vinden op pagina \pageref{sec:code1}.
+Wanneer we handmatig de oplossing vergeleken met de oplossing merkten we dat er bijna geen afwijkingen waren ten opzichte van de gegeven oplossingen. Een exactere test naar de nauwkeurigheid van onze implementatie staat uitgewerkt in sectie \ref{sec:oef2}.
+
+% OPGAVE 2
 \opgave{2: Fouten en tijdsduur}\label{sec:oef2}
+In deze sectie bekijken we de nauwkeurigheid van onze Matlab implementatie aan de hand van de volgende input vergelijking:
+\begin{equation}\nonumber
+	u(x,y) = e^{x+y}
+\end{equation}
+Deze vergelijking werd opgelost in het Matlab script opgave2.m, waarvan de implementatie te vinden is op pagina \pageref{sec:code2}. De discretisatie stap, maximale fout en de tijdsduur voor de berekening werden uitgezet in tabel \ref{tab:fouten}.
 
 % Tabel met fouten
 \begin{table}[H]
 	\centering
-	\label{tab:fouten}
 	\begin{tabular}{l c r}
 		N & Maximale fout & Tijd [seconde] \\ \hline
 		8 & \num{1.6118e-04} & 0.002915 \\
@@ -67,9 +96,29 @@ Vergelijking \ref{eq:PDE} werd opgelost aan de hand van het algoritme in sectie 
 		1024 & \num{1.2605e-08} & 0.231955
 	\end{tabular}
 	\caption{Tabel met fouten in functie van discretisatie}
+	\label{tab:fouten}
 \end{table}
 
+Een voorzichtige schatting leert ons dat de maximale fout $\mathcal{O}(\frac{3}{2}N)$ is.
+\cleardoublepage
+
+% OPGAVE 3
 \opgave{3: Plot}\label{sec:oef3}
+Voor de laatste opgave rond de Poisson vergelijking schreven we een Matlab script dat het volgende randvoorwaardeprobleem oplost. \begin{equation}\nonumber
+f(x,y) =
+  \begin{cases}
+    -100       & \quad \text{als } (x,y) \in D = [ \, 0.4,0.6 ]\, \times [ \, 0.4,0.6 ]\,\\
+    0  & \quad \text{anders }
+  \end{cases}
+\end{equation}
+Met randen:
+\begin{equation}\nonumber
+	u_w(y) = 3, \quad u_o = 2, \quad u_z = 2+\sin{(\frac{\pi}{2}x)} \quad en \quad u_n = 1
+\end{equation}
+
+Daarna worden de oplossing (figuur \ref{fig:Plot3}) en de contourlijnen (figuur \ref{fig:Contour3}) geplot. De implementatie wordt gegeven op pagina \pageref{code3}, in de code van opgave3.m.
+Voor de plots werd een discretisatiestap van 128 gekozen. Deze waarde werd voldoende groot gekozen voor de nauwkeurigheid van de oplossing, maar niet te groot, aangezien het surf commando het rooster weergeeft en dit nefast was voor het kleurenprofiel van de plot. 
+
 \newpage
 % Contour figuur
 \begin{figure}[H]
@@ -92,14 +141,34 @@ Vergelijking \ref{eq:PDE} werd opgelost aan de hand van het algoritme in sectie 
 
 % Splines stuff
 \section{Splines}\label{sec:splines}
+In deze sectie wordt aangetoond dat splines gebruikt kunnen worden voor het oplossen van een kleinste kwadraten benadering (verder als kkb afgekort).
 
+% OPGAVE 4
 \opgave{4: Implementatie}\label{sec:oef4}
+Voor een efficiënte  evaluatie van B-splines werd het algoritme van de Boor (\ref{eq:deboor}) geïmplementeerd.
+\begin{equation}\label{eq:deboor}
+	s(x) = \sum\limits_{i=-k}^{n-1} c_iN_{i, k+1}(x)
+\end{equation}
+\begin{equation}\label{eq:deboorcoef}
+	c_i^{[\, r]\, } = \alpha_{i,r} c_i^{[\, r-1]\, } + (1-\alpha_{i,r})c_{i-1}^{[\, r-1]\, } \quad met \quad \alpha_{i,r} = \frac{x-t_i}{t_{i+k+1-r}-t_i}
+\end{equation}
+Waarvan de coëfficiënten bepaald kunnen worden uit (\ref{eq:deboorcoef}).\\
+De implementatie van de berekening van de coëfficiënten kan gevonden worden in deBoor.m, welke op pagina \pageref{sec:codedb} uitgeschreven staat.
 
+
+% OPGAVE 5
 \opgave{5: Illustratie correctheid}\label{sec:oef5}
 
+% OPGAVE 6
 \opgave{6: Ligging knooppunten}\label{sec:oef6}
 
+% OPGAVE 7
 \opgave{7: Ruis}\label{sec:oef7}
+De ruis wordt gemodelleerd aan de hand van (\ref{eq:noise}).
+\begin{equation}\label{eq:noise}
+	f(x) = \frac{\sin{(20x)}}{100x^2+5}
+\end{equation}
+
 
 % Code 'n shit
 \newpage
@@ -114,6 +183,7 @@ Vergelijking \ref{eq:PDE} werd opgelost aan de hand van het algoritme in sectie 
 \subsubsection{Opgave1.m}\label{sec:code1}
 \lstinputlisting[language=Matlab]{../Matlab/opgave1.m}
 
+\newpage
 \subsubsection{Opgave2.m}\label{sec:code2}
 \lstinputlisting[language=Matlab]{../Matlab/opgave2.m}
 
