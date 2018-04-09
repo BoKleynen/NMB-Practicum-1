@@ -7,13 +7,12 @@ args:
     t: array of knot points
 
 %}
-iMid = idivide(length(t), 2, 'floor');
+iMid = idivide(length(t), int32(2), 'floor');
 
 if x < t(iMid)
-    i = binarySearch(x, t(1:iMid));
+    i = binarySearch(x, t(1:iMid-1));
 elseif x >= t(iMid+1)
-    i = iMid + binarySearch(x, t(iMid:end));
+    i = iMid + binarySearch(x, t(iMid+1:end));
 else
     i = iMid;
 end
-
