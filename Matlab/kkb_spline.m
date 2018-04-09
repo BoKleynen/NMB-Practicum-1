@@ -29,13 +29,12 @@ result:
         x = xArr(row);
         
         BSplines = zeros(j);
-        BSplines(j+1) = 1;
+        BSplines(j) = 1;
         
-        for k = 2:order+2
+        for k = 1:order
             BSplines(j-k) = (tArr(j+k+1) - x)/(tArr(j+k+1) - tArr(j+1));
             
-            for l = j-1:-1:j-k-1
-                i = j-l;
+            for i = j-k+1:j-1
                 BSplines(i) = (x - tArr(i))/(tArr(i+k) - tArr(i))*BSplines(i) ...
                                 + (tArr(i+k+1) - x)/(tArr(i+k+1) - tArr(i+1))*BSplines(i+1);
             end
