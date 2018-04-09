@@ -4,7 +4,7 @@ Returns the index of the interval in which x lies.
 
 args:
     x: x
-    t: array
+    t: array of knot points
 
 %}
 iMid = idivide(length(t), 2, 'floor');
