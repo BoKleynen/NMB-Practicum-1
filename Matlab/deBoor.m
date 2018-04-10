@@ -10,7 +10,6 @@ Args:
  
 %}
 
-% TODO: check ranges for off by one mistakes.
 for r = 1:k
     for i = j:-1:j-k+r
         alpha = (x-t(i))/(t(i+k+1-r)-t(i));
