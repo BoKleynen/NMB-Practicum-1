@@ -1,4 +1,4 @@
-function [U] = PDE(f, N, u_w, u_o, u_z, u_n)
+function U = pde(f, N, u_w, u_o, u_z, u_n)
    h = 1/(N+1);
    
    [X, Y] = meshgrid(h:h:1-h);

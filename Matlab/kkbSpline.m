@@ -1,4 +1,4 @@
-function z = kkb_spline(tArr,xArr,fArr,yArr,k)
+function z = kkbSpline(tArr,xArr,fArr,yArr,k)
 %{
     args:
         tArr: array of n+2k+1 knot points.

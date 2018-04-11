@@ -4,7 +4,7 @@ uo = @(y) 2;
 uz = @(x) 2 + sin(pi*x/2);
 un = @(x) 1;
 
-U = PDE(@f, N, uw, uo, uz, un);
+U = pde(@f, N, uw, uo, uz, un);
 h = 1/(N+1);
 [X, Y] = meshgrid(h:h:1-h);
 surf(X, Y, U)
