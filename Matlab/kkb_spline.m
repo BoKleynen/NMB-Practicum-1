@@ -16,11 +16,11 @@ result:
         error('fArr and x should have the same dimensions.');
     end
     r = length(fArr);
-    n = length(t) - 2*degree - 1;
+    n = length(tArr) - 2*degree - 1;
     
     indexArr = zeros(r);
-    for i = 1:r
-        indexArr(i) = binarySearch(xArr(i), t);
+    for row = 1:r
+        indexArr(row) = binarySearch(xArr(row), tArr);
     end
     
     M = zeros(r, n+degree);
@@ -28,10 +28,10 @@ result:
         j = degree+1;
         x = xArr(row);
         
-        BSplines = zeros(j);
+        BSplines = zeros(1, j);
         BSplines(j) = 1;
         
-        for k = 1:degree+1
+        for k = 1:degree
             BSplines(j-k) = (tArr(j+k+1) - x)/(tArr(j+k+1) - tArr(j+1));
             
             for i = j-k+1:j-1
@@ -47,8 +47,8 @@ result:
     
     c = fArr\M;
     
-    z = zeros(length(yArr));
+    z = zeros(size(yArr));
     for i = 1:length(yArr)
-        z(i) = deBoor(xArr, tArr, order, c, indexArr(i));
+        z(i) = deBoor(xArr(i), tArr, degree, c, indexArr(i));
     end
 end
