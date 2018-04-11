@@ -9,12 +9,15 @@ Args:
     c: coefficients (length n+k)
  
 %}
-
-for r = 1:k
-    for i = j:-1:j-k+r
-        alpha = (x-t(i))/(t(i+k+1-r)-t(i));
-        c(i) = alpha*c(i) + (1-alpha)*c(i-1);
+    if x >= t(end-2*k-1)
+        s = 0;
+    else
+        for r = 1:k
+            for i = j:-1:j-k+r
+                alpha = (x-t(i))/(t(i+k+1-r)-t(i));
+                c(i) = alpha*c(i) + (1-alpha)*c(i-1);
+            end
+        end
+        s = c(j);
     end
-end
-s = c(j);
 end

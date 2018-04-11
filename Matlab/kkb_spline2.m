@@ -27,11 +27,11 @@ result:
         BSplines(j) = 1;
         
         for l = 1:k
-            BSplines(j-l) = (tArr(j-l+k+1) - x)/(tArr(j-l+k+1) - tArr(j-l+1))*BSplines(j-l+1);
+            BSplines(j-l) = (tArr(j+1) - x)/(tArr(j+1) - tArr(j-l+1))*BSplines(j-l+1);
             
-            for i = j-k+1:j-1
-                BSplines(i) = (x - tArr(i))/(tArr(i+k) - tArr(i))*BSplines(i) ...
-                    + (tArr(i+k+1) - x)/(tArr(i+k+1) - tArr(i+1))*BSplines(i+1);
+            for i = j-l+1:j-1
+                BSplines(i) = (x - tArr(i))/(tArr(i+l) - tArr(i))*BSplines(i) ...
+                    + (tArr(i+l+1) - x)/(tArr(i+l+1) - tArr(i+1))*BSplines(i+1);
             end
             
             BSplines(j) = (x - tArr(j))/(tArr(j+l) - tArr(j))*BSplines(j);

@@ -2,7 +2,7 @@ t0 = -1;
 tn = 1;
 k = 3;
 
-x = linspace(t0, tn, 20)';
+x = linspace(t0, tn, 200)';
 f = sin(20*x)./(100*x.^2+5);
 f_ruis = f + 0.04*randn(size(x));
 err = zeros(10, 3);
