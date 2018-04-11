@@ -1,15 +1,14 @@
 function z = kkb_spline(tArr,xArr,fArr,yArr,k)
 %{
-args:
-    tArr: array of knot points (length n+2k+1).
-    xArr: array of x-values for which f(x) is known (length r).
-    fArr: array of function values (length r).
-    yArr: array of x-values for which an approximation has to be calculated
-       (length N).
-    degree: degree of the B-splines.
+    args:
+        tArr: array of n+2k+1 knot points.
+        xArr: array of r x-values for which f(x) is known and given in fArr.
+        fArr: array of r function values of elements in xArr.
+        yArr: array of N x-values for which an approximation has to be calculated
+        k: degree of the B-splines.
 
-result:
-    z: array of approximations of y (length N).
+    result:
+        z: array N of approximations of y.
 %}
 
     if length(fArr) ~= length(xArr)

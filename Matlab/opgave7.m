@@ -8,7 +8,7 @@ f_ruis = f + 0.04*randn(size(x));
 err = [];
 
 for n = 5:300
-    t = knotPoints(t0, tn, k, (tn-t0)/n);
+    t = knotPoints(t0, tn, k, n);
     z = kkb_spline(t, x, f_ruis, x, k);
     err(n-9, 1) = n;
     err(n-9, 2) = norm(f - z);
