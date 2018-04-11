@@ -1,4 +1,4 @@
-function z = kkb_spline(tArr,xArr,fArr,yArr,degree)
+function z = kkb_spline2(tArr,xArr,fArr,yArr,k)
 %{
 args:
     tArr: array of knot points (length n+2k+1).
@@ -16,39 +16,33 @@ result:
         error('fArr and x should have the same dimensions.');
     end
     r = length(fArr);
-    n = length(tArr) - 2*degree - 1;
+    n = length(tArr) - 2*k - 1;
     
-    indexArr = zeros(r);
+    M = zeros(r, n+k);
     for row = 1:r
-        indexArr(row) = binarySearch(xArr(row), tArr);
-    end
-    
-    M = zeros(r, n+degree);
-    for row = 1:r
-        j = indexArr(row);
+        j = binarySearch(xArr(row), tArr);
         x = xArr(row);
         
-        BSplines = zeros(1, n+2*degree+1);
+        BSplines = zeros(1, n+k);
         BSplines(j) = 1;
         
-        for k = 1:degree
-            BSplines(j-k) = (tArr(j+k+1) - x)/(tArr(j+k+1) - tArr(j+1))*BSplines(j-k+1);
+        for l = 1:k
+            BSplines(j-l) = (tArr(j-l+k+1) - x)/(tArr(j-l+k+1) - tArr(j-l+1))*BSplines(j-l+1);
             
             for i = j-k+1:j-1
                 BSplines(i) = (x - tArr(i))/(tArr(i+k) - tArr(i))*BSplines(i) ...
-                                + (tArr(i+k+1) - x)/(tArr(i+k+1) - tArr(i+1))*BSplines(i+1);
+                    + (tArr(i+k+1) - x)/(tArr(i+k+1) - tArr(i+1))*BSplines(i+1);
             end
             
-            BSplines(j) = (x - tArr(j))/(tArr(j+k) - tArr(j))*BSplines(j);
+            BSplines(j) = (x - tArr(j))/(tArr(j+l) - tArr(j))*BSplines(j);
         end
-        
-        M(row,:) = BSplines(1:n+degree);
+
+        M(row,1:end) = BSplines(1:n+k);
     end
     
     c = fArr\M;
-    
     z = zeros(size(yArr));
     for i = 1:length(yArr)
-        z(i) = deBoor(xArr(i), tArr, degree, c, indexArr(i));
+        z(i) = deBoor(yArr(i), tArr, k, c, binarySearch(yArr(i), tArr));
     end
 end

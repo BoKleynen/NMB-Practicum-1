@@ -4,7 +4,7 @@ evaluates s(x)
 
 Args:
     x: x to be evaluated
-    t: array of knot points (length n + 2k +1)
+    t: array of knot points (length n + 2k + 1)
     k: degree of B-spline
     c: coefficients (length n+k)
  
