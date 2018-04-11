@@ -4,3 +4,13 @@
 *.m~
 
 *.pdf
+
+*.gz
+
+*.log
+
+*.toc
+
+*.out
+
+*.aux
