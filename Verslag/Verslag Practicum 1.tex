@@ -153,11 +153,22 @@ Voor een efficiënte  evaluatie van B-splines werd het algoritme van de Boor (\re
 	c_i^{[\, r]\, } = \alpha_{i,r} c_i^{[\, r-1]\, } + (1-\alpha_{i,r})c_{i-1}^{[\, r-1]\, } \quad met \quad \alpha_{i,r} = \frac{x-t_i}{t_{i+k+1-r}-t_i}
 \end{equation}
 Waarvan de coëfficiënten bepaald kunnen worden uit (\ref{eq:deboorcoef}).\\
-De implementatie van de berekening van de coëfficiënten kan gevonden worden in deBoor.m, welke op pagina \pageref{sec:codedb} uitgeschreven staat.
-
+De implementatie van de berekening voor de waarde van een B-spline op een positie x staat gegeven in deBoor.m op pagina \pageref{sec:codedb}.
 
 % OPGAVE 5
 \opgave{5: Illustratie correctheid}\label{sec:oef5}
+Ter illustratie van de correctheid van het algoritme van de Boor werden 5 kubische splines (graad k = 3) getekend in figuur \ref{fig:splines}.
+De Matlab code voor deze tekeningen staat in opgave5.m (pagina \pageref{sec:code5}) en plotBSpline.m (pagina \pageref{sec:codeplotb}).
+
+%Plot Splines
+\begin{figure}[H]
+	\begin{center} 
+		\includegraphics[width=0.6\textwidth]{BSplines.eps}
+	\end{center}
+	\caption{Kubische B-splines voor Opgave 5.}
+	\label{fig:splines}
+\end{figure}
+\newpage
 
 % OPGAVE 6
 \opgave{6: Ligging knooppunten}\label{sec:oef6}
@@ -194,13 +205,19 @@ De ruis wordt gemodelleerd aan de hand van (\ref{eq:noise}).
 \subsection{Spline Code}\label{sec:generalspline}
 
 \subsubsection{KKB Spline}\label{sec:codekkb}
-\lstinputlisting[language=Matlab]{../Matlab/kkb_spline.m}
+\lstinputlisting[language=Matlab]{../Matlab/kkbSpline.m}
 
 \subsubsection{deBoor.m}\label{sec:codedb}
 \lstinputlisting[language=Matlab]{../Matlab/deBoor.m}
 
-\subsubsection{createM.m}\label{sec:codeM}
-\lstinputlisting[language=Matlab]{../Matlab/createM.m}
+\subsubsection{plotBSpline.m}\label{sec:codeplotb}
+\lstinputlisting[language=Matlab]{../Matlab/plotBSpline.m}
+
+\subsubsection{knotPoints.m}\label{sec:codeknot}
+\lstinputlisting[language=Matlab]{../Matlab/knotPoints.m}
+
+\subsubsection{binarySearch.m}\label{sec:codebinary}
+\lstinputlisting[language=Matlab]{../Matlab/binarySearch.m}
 
 \subsubsection{Opgave5.m}\label{sec:code5}
 \lstinputlisting[language=Matlab]{../Matlab/opgave5.m}
