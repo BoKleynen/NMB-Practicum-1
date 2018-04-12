@@ -1,7 +1,6 @@
 function s = deBoor(x, t, k, c, j)
 %{ 
 evaluates s(x)
-
 Args:
     x: x to be evaluated
     t: array of knot points (length n + 2k + 1)
