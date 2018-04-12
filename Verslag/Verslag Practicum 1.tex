@@ -175,11 +175,52 @@ De Matlab code voor deze tekeningen staat in opgave5.m (pagina \pageref{sec:code
 
 % OPGAVE 7
 \opgave{7: Ruis}\label{sec:oef7}
-De ruis wordt gemodelleerd aan de hand van (\ref{eq:noise}).
+De ruis wordt gemodelleerd aan de hand van (\ref{eq:f}) waaraan een willekeurige component wordt toegevoegd (\ref{eq:noise}).
+\begin{equation}\label{eq:f}
+	f_{ruis}(x) = \frac{\sin{(20x)}}{100x^2+5}
+\end{equation}
 \begin{equation}\label{eq:noise}
-	f(x) = \frac{\sin{(20x)}}{100x^2+5}
+	f_{ruis}(x) = \frac{\sin{(20x)}}{100x^2+5} + 0.04*randn(size(x))
 \end{equation}
 
+Het minimale residu van de benaderingen wordt weergegeven in tabel \ref{tab:splineError}.
+%Tabelletje
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l c r}
+		Functie & Minimaal residu & Aantal knooppunten \\ \hline
+		f(x) & 0.3380 & 199 \\
+		Fruis(x) & 0.3469 & 190 \\
+	\end{tabular}
+	\caption{Optimaal residu en aantal knooppunten}
+	\label{tab:splineError}
+\end{table}
+
+De code is te vinden in Opgave7.m op pagina \pageref{sec:code7}.
+
+\begin{figure}[H]
+	\begin{center} 
+		\includegraphics[width=0.4\textwidth]{ErrorBSplines.eps}
+	\end{center}
+	\caption{Fouten van de KKB implementatie.}
+	\label{fig:errorkkb}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center} 
+		\includegraphics[width=0.4\textwidth]{PlotSplinesNoNoise.eps}
+	\end{center}
+	\caption{De functie f zonder ruis (rood) en beste benadering (blauw).}
+	\label{fig:plotNoNoise}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center} 
+		\includegraphics[width=0.4\textwidth]{PlotSplinesNoise.eps}
+	\end{center}
+	\caption{De functie f met ruis (rood) en beste benadering (blauw).}
+	\label{fig:plotNoise}
+\end{figure}
 
 % Code 'n shit
 \newpage
@@ -218,6 +259,9 @@ De ruis wordt gemodelleerd aan de hand van (\ref{eq:noise}).
 
 \subsubsection{binarySearch.m}\label{sec:codebinary}
 \lstinputlisting[language=Matlab]{../Matlab/binarySearch.m}
+
+\subsubsection{multiplicityKnotPoints.m}\label{sec:codemultiple}
+\lstinputlisting[language=Matlab]{../Matlab/multiplicityKnotPoints.m}
 
 \subsubsection{Opgave5.m}\label{sec:code5}
 \lstinputlisting[language=Matlab]{../Matlab/opgave5.m}
