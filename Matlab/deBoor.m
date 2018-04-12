@@ -9,7 +9,7 @@ Args:
     c: coefficients (length n+k)
  
 %}
-    if x >= t(end-2*k+1)
+    if x >= t(end-k)
         s = 0;
     else
         for r = 1:k

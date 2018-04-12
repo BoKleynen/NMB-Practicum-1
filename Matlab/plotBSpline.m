@@ -7,7 +7,7 @@ interval = 1;
 
 % do not modify
 n = (tn - t0)/interval;
-t = knotPoints(t0, tn, k, interval);
+t = knotPoints(t0, tn, k, n);
 c = zeros(n+k);
 a = i + k + 1;
 c(a) = 1;

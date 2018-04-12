@@ -7,7 +7,7 @@ f = sin(20*x)./(100*x.^2+5);
 f_ruis = f + 0.04*randn(size(x));
 err = [];
 
-for n = 5:300
+for n = 10:300
     t = knotPoints(t0, tn, k, n);
     z = kkbSpline(t, x, f_ruis, x, k);
     err(n-9, 1) = n;
