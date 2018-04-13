@@ -172,6 +172,38 @@ De Matlab code voor deze tekeningen staat in opgave5.m (pagina \pageref{sec:code
 
 % OPGAVE 6
 \opgave{6: Ligging knooppunten}\label{sec:oef6}
+Ter illustratie van het effect van de ligging van de knooppunten werd de rechthoekige puls (\ref{eq:rect}) benaderd (figuur  \ref{fig:rectan}).
+
+\begin{equation}
+f(x) =
+  \begin{cases}
+    1       & \quad \text{als } -0.5 < x < 0.5\\
+    0  & \quad \text{anders }
+  \end{cases}
+  \label{eq:rect}
+\end{equation}
+
+We namen eerst een benadering op basis van 20 equidistante knooppunten op het interval [-1,1]. Deze werd op de figuur getekend (blauw) samen met de rechthoekpuls (rood). \\
+
+Daarna werd de rechthoekpuls benaderd door middel van 20 knooppunten die dicht bij de flanken van de puls te kiezen. Deze flanken vari\"eren zeer sterk, waardoor deze moeilijk te benaderen zijn. Deze benadering werd in het groen getoond in figuur (\ref{fig:rectan}). Figuur \ref{fig:rectanZoom} toont dezelfde functies maar met x beperkt in [-0.52, -0.48]. \\
+
+De Matlab code en de daarin gebruikte knooppunt rijen zij te vinden in Opgave6.m op pagina \pageref{sec:code6}.
+\begin{figure}[H]
+	\begin{center} 
+		\includegraphics[width=0.4\textwidth]{Rectan.eps}
+	\end{center}
+	\caption{Benadering van de rechthoekige puls.}
+	\label{fig:rectan}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center} 
+		\includegraphics[width=0.4\textwidth]{RectanZoom.eps}
+	\end{center}
+	\caption{Benadering van de rechthoekige puls.}
+	\label{fig:rectanZoom}
+\end{figure}
+\newpage
 
 % OPGAVE 7
 \opgave{7: Ruis}\label{sec:oef7}
@@ -259,9 +291,6 @@ De code is te vinden in Opgave7.m op pagina \pageref{sec:code7}.
 
 \subsubsection{binarySearch.m}\label{sec:codebinary}
 \lstinputlisting[language=Matlab]{../Matlab/binarySearch.m}
-
-\subsubsection{multiplicityKnotPoints.m}\label{sec:codemultiple}
-\lstinputlisting[language=Matlab]{../Matlab/multiplicityKnotPoints.m}
 
 \subsubsection{Opgave5.m}\label{sec:code5}
 \lstinputlisting[language=Matlab]{../Matlab/opgave5.m}
