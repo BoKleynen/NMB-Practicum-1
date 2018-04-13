@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{physics}
 \usepackage[dutch]{babel}
+\usepackage{fixltx2e}
 
 
 \usepackage{hyperref}
@@ -228,7 +229,9 @@ Het minimale residu van de benaderingen wordt weergegeven in tabel \ref{tab:spli
 	\label{tab:splineError}
 \end{table}
 
-De code is te vinden in Opgave7.m op pagina \pageref{sec:code7}.
+In figuur \ref{fig:errorkkb} werd norm(f\textsubscript{ruis} - z) (blauw) en norm(f - z) (rood) uitgezet in functie van het aantal equidistante knooppunten, met z de kkb van f\textsubscript{ruis}. Hierin is er een minimum, die, zoals reeds vermeld, in tabel \ref{tab:splineError} staan. In figuur \ref{fig:plotNoNoise} staan f(x) (rood) en de kkb van f(x) (blauw) geplot. In figuur \ref{fig:plotNoise} staan f\textsubscript{ruis}(x) (rood) en de overeenkomstige kkb (blauw). De figuren tonen ook aan dat de grootste benaderingsfouten zich voordoen waar de functie het meest varieert, zoals verwacht. Dit kan verholpen worden door in plaats van equidistante knooppunten, de knooppunten beter te verdelen in de buurt van de variaties. Dit kan echter enkel in de functie waar nog geen ruis aanwezig is, aangezien de variaties door ruis niet voorspelt kunnen worden. \\
+
+De Matlab code voor dit probleem is te vinden in Opgave7.m op pagina \pageref{sec:code7}.
 
 \begin{figure}[H]
 	\begin{center} 
@@ -280,11 +283,15 @@ De code is te vinden in Opgave7.m op pagina \pageref{sec:code7}.
 \subsubsection{KKB Spline}\label{sec:codekkb}
 \lstinputlisting[language=Matlab]{../Matlab/kkbSpline.m}
 
+\newpage
+
 \subsubsection{deBoor.m}\label{sec:codedb}
 \lstinputlisting[language=Matlab]{../Matlab/deBoor.m}
 
 \subsubsection{plotBSpline.m}\label{sec:codeplotb}
 \lstinputlisting[language=Matlab]{../Matlab/plotBSpline.m}
+
+\newpage
 
 \subsubsection{knotPoints.m}\label{sec:codeknot}
 \lstinputlisting[language=Matlab]{../Matlab/knotPoints.m}
