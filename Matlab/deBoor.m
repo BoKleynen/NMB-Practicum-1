@@ -8,7 +8,7 @@ function s = deBoor(x, t, k, c, j)
     c: coefficients (length n+k)
 
 %}
-  if x >= t(end-k)
+  if x < t(k+1) || x >= t(end-k)
     s = 0;
   else
     for r = 1:k

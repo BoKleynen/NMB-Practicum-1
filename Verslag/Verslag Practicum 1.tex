@@ -18,7 +18,8 @@
 	captionpos=b,
 	frame=single,
 	numbers=left,
-	numberstyle=\tiny\color{{rgb}{0.5,0.5,0.5}}
+	numberstyle=\tiny\color{{rgb}{0.5,0.5,0.5}},
+	showstringspaces=false,
 }
 
 \usepackage{hyperref}
@@ -93,15 +94,15 @@ De cocrectheid van de implementatie werd geverifieerd door het oplossen van \ref
 % OPGAVE 2
 \opgave{2: Fouten en tijdsduur}\label{sec:oef2}
 In deze sectie bekijken we de nauwkeurigheid van de implementatie aan de hand van de volgende vergelijking:
-\begin{equation}\nonumber
+\begin{equation}
 	\nabla^2u(x,y) = e^{x+y}
 \end{equation}
 met randvoorwaarden:
-\begin{equation}\nonumber
+\begin{equation}
 	u_w(y)=e^y, \quad u_o(y)=e^{1+y}, \quad u_z(x)=e^x, \quad u_n(x)=e^{1+x}
 \end{equation}
 en exacte oplossing
-\begin{equation}\nonumber
+\begin{equation}
 	u(x,y) = e^{x+y}
 \end{equation}
 
@@ -130,7 +131,7 @@ Een voorzichtige schatting leert ons dat de maximale fout $\mathcal{O}(\frac{3}{
 % OPGAVE 3
 \opgave{3: Plot}\label{sec:oef3}
 Tot slot werd er gevraagd om de Poissonvergelijking op te lossen voor volgend $f(x,y)$. 
-\begin{equation}\nonumber
+\begin{equation}
 f(x,y) =
   \begin{cases}
     -100       & \quad \text{als } (x,y) \in D = [ \, 0.4,0.6 ]\, \times [ \, 0.4,0.6 ]\,\\
@@ -138,7 +139,7 @@ f(x,y) =
   \end{cases}
 \end{equation}
 Met randvoorwaarden:
-\begin{equation}\nonumber
+\begin{equation}
 	u_w(y) = 3, \quad u_o = 2, \quad u_z = 2+\sin{(\frac{\pi}{2}x)} \quad en \quad u_n = 1
 \end{equation}
 Onderstaand stuk code toont het matlab script gebruikt om dit randwaardeprobleem op te lossen.
@@ -167,12 +168,12 @@ figuur \ref{fig:Contour3} toont de contour plot en figuur \ref{fig:Plot3} het 3 
 
 % Splines stuff
 \section{Splines}\label{sec:splines}
-Dit deel behandelt het opstellen van een kleinste-kwadraten benadering met behulp van splinefuncties. Eerst komt de implementatie van een efficiente methode voor het opstellen van een kleinste-kwadraten spline benadering in matlab aan bod daarna volgt de implementatie van het algoritme van de Boor om deze benadering te evalueren en tot slot een bespreking van opgaves 5 tot en met 7.
+Dit deel behandelt het opstellen van een kleinste-kwadraten benadering met behulp van splinefuncties. Eerst komt de implementatie van een efficiente methode voor het opstellen van een kleinste-kwadraten spline benadering in matlab aan bod daarna volgt de implementatie van het algoritme van de Boor om deze benadering te evalueren en tot slot een bespreking van opgaven 5 tot en met 7.
 
 % OPGAVE 4
 \subsection{Implementatie van de algoritmen}
 \subsubsection{Opstellen van de kleinste-kwadraten benadring}
-Uitgaande van het algoritme in sectie 2.2 we volgende tabel op om de matrix M te bepalen, voor $x \in [t_j, t_{j+1}]$ en $l=1, 2, ... k$ met $k$ de graad van de spline functies.
+Uitgaande van het algoritme in sectie 2.2 van de opgave stellen we volgende tabel op om de matrix M te bepalen, voor $x \in [t_j, t_{j+1}]$ en $l=1, 2, ... k$ met $k$ de graad van de spline benadering.
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| c c c c c c c  |}
@@ -188,7 +189,7 @@ Uitgaande van het algoritme in sectie 2.2 we volgende tabel op om de matrix M te
 	\end{tabular}
 \end{table}
 In de $l$-de kolom (beginnend vanaf 0) staan de functiewaarden van alle B-splines van graad $l$, die verschillend zijn van 0 in het punt x. 
-$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom best telkens als eerste bepaald, zo moet er maar een enkele array van lengte k+1 gereserveerd worden in het geheugen van de computer. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$
+$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom telkens als eerste bepaald, zo kunnen. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$. Om het programma wat overzichtelijker te houden en de hoeveelheid rekenwerk minimaal te houden wordt volgende substitutie doorgevoerd: $i=j-\gamma$ met $i$ gaande van $j-l+1$ tot en met $j-1$.
 \newpage
 \lstinputlisting[language=Matlab, caption=kkbSpline]{../Matlab/kkbSpline.m}
 \newpage
@@ -204,6 +205,7 @@ Zij $x\in[t{j}, t_{j+1})$ dan geldt $s(x)=c_{j}^{[k]}$ met $c_i^{[0]} = c_i$ en 
 	c_i^{[\, r]\, } = \alpha_{i,r} c_i^{[\, r-1]\, } + (1-\alpha_{i,r})c_{i-1}^{[\, r-1]\, } \quad met \quad \alpha_{i,r} = \frac{x-t_i}{t_{i+k+1-r}-t_i}
 \end{equation}
 
+Per waarde van $r$ worden de $c_i^{[\, r]\, }$ bepaald volgens afnemende $i$ dus voor $i$ gaande van $j$ tot en met $j-k+r$ voor $r$ gaande van $1$ tot en met $k$, op die mannier kan de waarde van $c_i^{[\, r]\, }$ op dezelfde plaats in het computergeheugen opgeslagen worden als $c_i^{[\, r-1]\, }$
 
 \lstinputlisting[language=Matlab, caption= de Boor]{../Matlab/deBoor.m}
 

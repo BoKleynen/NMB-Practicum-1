@@ -22,23 +22,18 @@ function z = kkbSpline(tArr,xArr,fArr,yArr,k)
   for row = 1:r
     j = binarySearch(xArr(row), tArr);
     x = xArr(row);
-
-    BSplines = zeros(1, n+k);
-    BSplines(j) = 1;
-
+    
+    M(row,j) = 1;
     for l = 1:k
-      BSplines(j-l) = ...
-        (tArr(j+1)-x)/(tArr(j+1)-tArr(j-l+1))*BSplines(j-l+1);
+      M(row,j-l) = (tArr(j+1) - x)/(tArr(j+1) - tArr(j-l+1))*M(row,j-l+1);
 
       for i = j-l+1:j-1
-        BSplines(i) = (x - tArr(i))/(tArr(i+l) - tArr(i))*BSplines(i) ...
-            + (tArr(i+l+1) - x)/(tArr(i+l+1) - tArr(i+1))*BSplines(i+1);
+        M(row,i) = (x - tArr(i))/(tArr(i+l) - tArr(i))*M(row,i) ...
+            + (tArr(i+l+1) - x)/(tArr(i+l+1) - tArr(i+1))*M(row,i+1);
       end
 
-      BSplines(j) = (x - tArr(j))/(tArr(j+l) - tArr(j))*BSplines(j);
+      M(row,j) = (x - tArr(j))/(tArr(j+l) - tArr(j))*M(row,j);
     end
-
-    M(row,1:end) = BSplines(1:n+k);
   end
 
   c = fArr\M;
