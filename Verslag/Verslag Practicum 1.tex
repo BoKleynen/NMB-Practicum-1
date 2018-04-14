@@ -11,7 +11,7 @@
 \usepackage{fixltx2e}
 
 \renewcommand{\lstlistingname}{Algoritme}
-\renewcommand{\lstlistlistingname}{Lijst van \lstlistingname n}
+\renewcommand{\lstlistlistingname}{Lijst van algoritmen}
 
 \lstset{
 	language=Matlab,
@@ -50,13 +50,14 @@
 
 % List of figures
 \listoffigures
-\addcontentsline{toc}{section}{\numberline{} Lijst van Figuren}
+\addcontentsline{toc}{section}{\numberline{} Lijst van tiguren}
 
 % List of Tables
 \listoftables
-\addcontentsline{toc}{section}{\numberline{} Lijst van Tabellen}
+\addcontentsline{toc}{section}{\numberline{} Lijst van tabellen}
 
 \lstlistoflistings
+\addcontentsline{toc}{section}{\numberline{} Lijst van algoritmen}
 
 \cleardoublepage
 
@@ -189,7 +190,7 @@ Uitgaande van het algoritme in sectie 2.2 van de opgave stellen we volgende tabe
 	\end{tabular}
 \end{table}
 In de $l$-de kolom (beginnend vanaf 0) staan de functiewaarden van alle B-splines van graad $l$, die verschillend zijn van 0 in het punt x. 
-$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom telkens als eerste bepaald, zo kunnen de waarden van $N_{\alpha,\beta}(x)$. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$. Om het programma wat overzichtelijker te houden en de hoeveelheid rekenwerk minimaal te houden wordt volgende substitutie doorgevoerd: $i=j-\gamma$ met $i$ gaande van $j-l+1$ tot en met $j-1$.
+$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom telkens als eerste bepaald, zo kunnen de  waarden van opeenvolgende $N_{\alpha,l+1}(x)$ telkens op de juiste plaats in de matrix M opgeslagen worden. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$. Om het programma wat overzichtelijker te houden en de hoeveelheid rekenwerk minimaal te houden wordt volgende substitutie doorgevoerd: $i=j-\gamma$ met $i$ gaande van $j-l+1$ tot en met $j-1$.
 \newpage
 \lstinputlisting[language=Matlab, caption=kkbSpline]{../Matlab/kkbSpline.m}
 \newpage
