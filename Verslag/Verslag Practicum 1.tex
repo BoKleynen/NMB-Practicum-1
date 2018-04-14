@@ -10,7 +10,7 @@
 \usepackage[dutch]{babel}
 \usepackage{fixltx2e}
 
-\renewcommand{\lstlistingname}{Algoritme}
+\renewcommand{\lstlistingname}{algoritme}
 \renewcommand{\lstlistlistingname}{Lijst van \lstlistingname n}
 
 \lstset{
@@ -189,7 +189,7 @@ Uitgaande van het algoritme in sectie 2.2 van de opgave stellen we volgende tabe
 	\end{tabular}
 \end{table}
 In de $l$-de kolom (beginnend vanaf 0) staan de functiewaarden van alle B-splines van graad $l$, die verschillend zijn van 0 in het punt x. 
-$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom telkens als eerste bepaald, zo kunnen. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$. Om het programma wat overzichtelijker te houden en de hoeveelheid rekenwerk minimaal te houden wordt volgende substitutie doorgevoerd: $i=j-\gamma$ met $i$ gaande van $j-l+1$ tot en met $j-1$.
+$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom telkens als eerste bepaald, zo kunnen de waarden van $N_{\alpha,\beta}(x)$. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$. Om het programma wat overzichtelijker te houden en de hoeveelheid rekenwerk minimaal te houden wordt volgende substitutie doorgevoerd: $i=j-\gamma$ met $i$ gaande van $j-l+1$ tot en met $j-1$.
 \newpage
 \lstinputlisting[language=Matlab, caption=kkbSpline]{../Matlab/kkbSpline.m}
 \newpage
@@ -205,7 +205,7 @@ Zij $x\in[t{j}, t_{j+1})$ dan geldt $s(x)=c_{j}^{[k]}$ met $c_i^{[0]} = c_i$ en 
 	c_i^{[\, r]\, } = \alpha_{i,r} c_i^{[\, r-1]\, } + (1-\alpha_{i,r})c_{i-1}^{[\, r-1]\, } \quad met \quad \alpha_{i,r} = \frac{x-t_i}{t_{i+k+1-r}-t_i}
 \end{equation}
 
-Per waarde van $r$ worden de $c_i^{[\, r]\, }$ bepaald volgens afnemende $i$ dus voor $i$ gaande van $j$ tot en met $j-k+r$ voor $r$ gaande van $1$ tot en met $k$, op die mannier kan de waarde van $c_i^{[\, r]\, }$ op dezelfde plaats in het computergeheugen opgeslagen worden als $c_i^{[\, r-1]\, }$
+Per waarde van $r$ worden de $c_i^{[\, r]\, }$ bepaald volgens afnemende $i$ dus voor $i$ gaande van $j$ tot en met $j-k+r$ voor $r$ gaande van $1$ tot en met $k$, op die mannier kan de waarde van $c_i^{[\, r]\, }$ op dezelfde plaats in het computergeheugen opgeslagen worden als $c_i^{[\, r-1]\, }$.
 
 \lstinputlisting[language=Matlab, caption= de Boor]{../Matlab/deBoor.m}
 
