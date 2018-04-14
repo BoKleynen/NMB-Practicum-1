@@ -10,6 +10,16 @@
 \usepackage[dutch]{babel}
 \usepackage{fixltx2e}
 
+\renewcommand{\lstlistingname}{Algoritme}
+\renewcommand{\lstlistlistingname}{Lijst van \lstlistingname n}
+
+\lstset{
+	language=Matlab,
+	captionpos=b,
+	frame=single,
+	numbers=left,
+	numberstyle=\tiny\color{{rgb}{0.5,0.5,0.5}}
+}
 
 \usepackage{hyperref}
 \hypersetup{pdfborder={0 0 0}}
@@ -20,7 +30,7 @@
 % Title Page stuff
 \title{Practicum Numerieke Modelering en Benadering}
 \author{Wim Kunnen \\ Bo Kleynen}
-\date{Vrijdag 6 april 2018 }
+\date{zondag 15 april 2018 }
 
 % Actual document
 \begin{document}
@@ -30,13 +40,12 @@
 \thispagestyle{empty}
 \end{titlepage}
 
-% Table of Contents
-\tableofcontents
-\thispagestyle{empty}
-\cleardoublepage
 
+% Table of Contents
 \pagenumbering{roman}
 \setcounter{page}{1}
+\tableofcontents
+\cleardoublepage
 
 % List of figures
 \listoffigures
@@ -45,7 +54,11 @@
 % List of Tables
 \listoftables
 \addcontentsline{toc}{section}{\numberline{} Lijst van Tabellen}
+
+\lstlistoflistings
+
 \cleardoublepage
+
 
 
 \pagenumbering{arabic}
@@ -53,34 +66,46 @@
 
 % PDE stuff
 \section{Partial Differential Equations}\label{sec:PDE}
-Voor de eerste opgaven werd de Poisson vergelijking numeriek opgelost als randvoorwaarde probleem. Het de implementatie van het algoritme werd in Matlab geschreven en is te vinden op pagina \pageref{sec:pde}.
+Het eerste deel behandelt het zoeken van een benaderende oplossing voor de Poisson vergelijking met als domein het eenheidsvierkant en gegeven Dirichlet randvoorwaarden.
 
-Vergelijking \ref{eq:poisson} toont de wiskundige formulering van het randvoorwaardeprobleem.
 \begin{equation}\label{eq:poisson}
 	\pdv[2]{u(x,y)}{x} + \pdv[2]{u(x,y)}{y} = f(x,y) \quad met (x,y) \in D = [ \, 0,1 ]\, \times [ \, 0,1 ]\,
 \end{equation}
-Met als randen:
+Met randvoorwaarden van de vorm:
 \begin{equation}\nonumber
 	u_w(y) = u(0,y), \quad u_o = u(1,y), \quad u_z = u(x,0) \quad en \quad u_n = u(x,1)
 \end{equation}
 
+
+
 % OPGAVE 1
 \opgave{1: Implementatie en controle}\label{sec:oef1}
-Zoals vermeld in sectie \ref{sec:PDE} werd de Poisson vergelijking \ref{eq:poisson} opgelost aan de hand van de Matlab code op pagina \pageref{sec:pde}.
-De implementatie werd getest aan de hand van volgende input vergelijkingen u(x,y):
-\begin{equation}\nonumber
-	u(x,y) = 1,\quad u(x,y) = 1 + x + y \quad en \quad u(x,y) = x^2 +y^2
-\end{equation}
-Deze vergelijkingen werden opgelost in het Matlab bestand opgave1.m, te vinden op pagina \pageref{sec:code1}.
-Wanneer we handmatig de oplossing vergeleken met de oplossing merkten we dat er bijna geen afwijkingen waren ten opzichte van de gegeven oplossingen. Een exactere test naar de nauwkeurigheid van onze implementatie staat uitgewerkt in sectie \ref{sec:oef2}.
+De implementatie van het gegeven algoritme
+\lstinputlisting[caption=pde]{../Matlab/PDE.m}
+De cocrectheid van de implementatie werd geverifieerd door het oplossen van \ref{eq:poisson} voor de volgende gevallen:
+\begin{itemize}
+	\item $\nabla^2u(x,y)=0$ met randvoorwaarden $u_w(y)=u_o(y)=u_z(x)=u_n(x)=0$ met als exacte oplossing $u(x,y) = 1$
+	\item $\nabla^2u(x,y)=0$ met randvoorwaarden $u_w(y)=1+y$, $u_o(y)=2+y$, $u_z(x)=1+x$ en $u_n(x)=2+x$ met als exacte oplossing $u(x,y) = 1 + x + y$
+	\item $\nabla^2u(x,y)=4$ met randvoorwaarden $u_w(y)=y^2$, $u_o(y)=1+y^2$, $u_z(x)=x^2$ en $u_n(x)=1+x^2$ met als exacte oplossing $u(x,y) = x^2 +y^2$
+\end{itemize}
+
 
 % OPGAVE 2
 \opgave{2: Fouten en tijdsduur}\label{sec:oef2}
-In deze sectie bekijken we de nauwkeurigheid van onze Matlab implementatie aan de hand van de volgende input vergelijking:
+In deze sectie bekijken we de nauwkeurigheid van de implementatie aan de hand van de volgende vergelijking:
+\begin{equation}\nonumber
+	\nabla^2u(x,y) = e^{x+y}
+\end{equation}
+met randvoorwaarden:
+\begin{equation}\nonumber
+	u_w(y)=e^y, \quad u_o(y)=e^{1+y}, \quad u_z(x)=e^x, \quad u_n(x)=e^{1+x}
+\end{equation}
+en exacte oplossing
 \begin{equation}\nonumber
 	u(x,y) = e^{x+y}
 \end{equation}
-Deze vergelijking werd opgelost in het Matlab script opgave2.m, waarvan de implementatie te vinden is op pagina \pageref{sec:code2}. De discretisatie stap, maximale fout en de tijdsduur voor de berekening werden uitgezet in tabel \ref{tab:fouten}.
+
+Tabel \ref{tab:fouten} toon de maximale fout en de rekentijd voor een aantal waarden van N.
 
 % Tabel met fouten
 \begin{table}[H]
@@ -101,25 +126,25 @@ Deze vergelijking werd opgelost in het Matlab script opgave2.m, waarvan de imple
 \end{table}
 
 Een voorzichtige schatting leert ons dat de maximale fout $\mathcal{O}(\frac{3}{2}N)$ is.
-\cleardoublepage
 
 % OPGAVE 3
 \opgave{3: Plot}\label{sec:oef3}
-Voor de laatste opgave rond de Poisson vergelijking schreven we een Matlab script dat het volgende randvoorwaardeprobleem oplost. \begin{equation}\nonumber
+Tot slot werd er gevraagd om de Poissonvergelijking op te lossen voor volgend $f(x,y)$. 
+\begin{equation}\nonumber
 f(x,y) =
   \begin{cases}
     -100       & \quad \text{als } (x,y) \in D = [ \, 0.4,0.6 ]\, \times [ \, 0.4,0.6 ]\,\\
     0  & \quad \text{anders }
   \end{cases}
 \end{equation}
-Met randen:
+Met randvoorwaarden:
 \begin{equation}\nonumber
 	u_w(y) = 3, \quad u_o = 2, \quad u_z = 2+\sin{(\frac{\pi}{2}x)} \quad en \quad u_n = 1
 \end{equation}
+Onderstaand stuk code toont het matlab script gebruikt om dit randwaardeprobleem op te lossen.
+\lstinputlisting[language=Matlab, caption=script opgave 3]{../Matlab/opgave3.m}
 
-Daarna worden de oplossing (figuur \ref{fig:Plot3}) en de contourlijnen (figuur \ref{fig:Contour3}) geplot. De implementatie wordt gegeven op pagina \pageref{code3}, in de code van opgave3.m.
-Voor de plots werd een discretisatiestap van 128 gekozen. Deze waarde werd voldoende groot gekozen voor de nauwkeurigheid van de oplossing, maar niet te groot, aangezien het surf commando het rooster weergeeft en dit nefast was voor het kleurenprofiel van de plot. 
-
+figuur \ref{fig:Contour3} toont de contour plot en figuur \ref{fig:Plot3} het 3 dimensionale oppervlak van de benaderende oplossing.
 \newpage
 % Contour figuur
 \begin{figure}[H]
@@ -142,24 +167,50 @@ Voor de plots werd een discretisatiestap van 128 gekozen. Deze waarde werd voldo
 
 % Splines stuff
 \section{Splines}\label{sec:splines}
-In deze sectie wordt aangetoond dat splines gebruikt kunnen worden voor het oplossen van een kleinste kwadraten benadering (verder als kkb afgekort).
+Dit deel behandelt het opstellen van een kleinste-kwadraten benadering met behulp van splinefuncties. Eerst komt de implementatie van een efficiente methode voor het opstellen van een kleinste-kwadraten spline benadering in matlab aan bod daarna volgt de implementatie van het algoritme van de Boor om deze benadering te evalueren en tot slot een bespreking van opgaves 5 tot en met 7.
 
 % OPGAVE 4
-\opgave{4: Implementatie}\label{sec:oef4}
-Voor een efficiënte  evaluatie van B-splines werd het algoritme van de Boor (\ref{eq:deboor}) geïmplementeerd.
+\subsection{Implementatie van de algoritmen}
+\subsubsection{Opstellen van de kleinste-kwadraten benadring}
+Uitgaande van het algoritme in sectie 2.2 we volgende tabel op om de matrix M te bepalen, voor $x \in [t_j, t_{j+1}]$ en $l=1, 2, ... k$ met $k$ de graad van de spline functies.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| c c c c c c c  |}
+		\hline
+		& & & & & & $N_{j-k,k+1}(x)$ \\
+		& & & & & . & $N_{j-k+1,k+1}(x)$ \\
+		& & & & $N_{j-l,l+1}(x)$ & $\hdots$ & $N_{j-k+2,k+1}(x)$ \\
+		& & & . & $\vdots$  & & $\vdots$\\
+		& & $N_{j-2,3}(x)$ & $\hdots$ & $N_{j-\gamma+1,l+1}(x)$ & $\hdots$ & $N_{j+2,k+1}(x)$   \\
+		& $N_{j-1,2}(x)$ & $N_{j-1,2}(x)$ & $\hdots$ & $\vdots$ &  &$N_{j+1,k+1}(x)$ \\
+		$N_{j,1}(x) = 1$ & $N_{j,2}(x)$ & $N_{j,3}(x)$ & $\hdots$ & $N_{j,l+1}(x)$ & $\hdots$ & $N_{j,k+1}(x)$ \\ 
+		\hline
+	\end{tabular}
+\end{table}
+In de $l$-de kolom (beginnend vanaf 0) staan de functiewaarden van alle B-splines van graad $l$, die verschillend zijn van 0 in het punt x. 
+$N_{j-l,l+1}(x)$ hangt enkel af van $N_{j-l+1,l}(x)$ en wordt daarom best telkens als eerste bepaald, zo moet er maar een enkele array van lengte k+1 gereserveerd worden in het geheugen van de computer. Vervolgens worden de waarden van $N_{j-\gamma+1,l+1}(x)$ bepaald voor $\gamma$ gaande van $1$ tot en met $k-1$ en tot slot de waarde van $N_{j,l+1}(x)$ die enkel afhangt van $N_{j,l}(x)$
+\newpage
+\lstinputlisting[language=Matlab, caption=kkbSpline]{../Matlab/kkbSpline.m}
+\newpage
+
+\subsubsection{Algoritme van de Boor}
+Gegeven een een splinefunctie die een lineaire combinatie is van $n+k$ B-splines
 \begin{equation}\label{eq:deboor}
 	s(x) = \sum\limits_{i=-k}^{n-1} c_iN_{i, k+1}(x)
 \end{equation}
+Kan daze zeer efficient geevalueerd worden, gebruik makend van het algoritme van de Boor:
+Zij $x\in[t{j}, t_{j+1})$ dan geldt $s(x)=c_{j}^{[k]}$ met $c_i^{[0]} = c_i$ en $c_i^{[r]}$ wordt gevonden uit:
 \begin{equation}\label{eq:deboorcoef}
 	c_i^{[\, r]\, } = \alpha_{i,r} c_i^{[\, r-1]\, } + (1-\alpha_{i,r})c_{i-1}^{[\, r-1]\, } \quad met \quad \alpha_{i,r} = \frac{x-t_i}{t_{i+k+1-r}-t_i}
 \end{equation}
-Waarvan de coëfficiënten bepaald kunnen worden uit (\ref{eq:deboorcoef}).\\
-De implementatie van de berekening voor de waarde van een B-spline op een positie x staat gegeven in deBoor.m op pagina \pageref{sec:codedb}.
+
+
+\lstinputlisting[language=Matlab, caption= de Boor]{../Matlab/deBoor.m}
+
 
 % OPGAVE 5
 \opgave{5: Illustratie correctheid}\label{sec:oef5}
-Ter illustratie van de correctheid van het algoritme van de Boor werden 5 kubische splines (graad k = 3) getekend in figuur \ref{fig:splines}.
-De Matlab code voor deze tekeningen staat in opgave5.m (pagina \pageref{sec:code5}) en plotBSpline.m (pagina \pageref{sec:codeplotb}).
+Ter illustratie van de correctheid van de implementatie van het algoritme van de Boor toont figuur \ref{fig:splines}, 5 kubische splines (graad k = 3).
 
 %Plot Splines
 \begin{figure}[H]
@@ -256,57 +307,5 @@ De Matlab code voor dit probleem is te vinden in Opgave7.m op pagina \pageref{se
 	\caption{De functie f met ruis (rood) en beste benadering (blauw).}
 	\label{fig:plotNoise}
 \end{figure}
-
-% Code 'n shit
-\newpage
-\section{Code}\label{sec:code}
-
-% PDE code
-\subsection{PDE Code}\label{sec:generalpde}
-
-\subsubsection{PDE.m}\label{sec:pde}
-\lstinputlisting[language=Matlab]{../Matlab/PDE.m}
-
-\subsubsection{Opgave1.m}\label{sec:code1}
-\lstinputlisting[language=Matlab]{../Matlab/opgave1.m}
-
-\newpage
-\subsubsection{Opgave2.m}\label{sec:code2}
-\lstinputlisting[language=Matlab]{../Matlab/opgave2.m}
-
-\subsubsection{Opgave3.m}\label{sec:code3}
-\lstinputlisting[language=Matlab]{../Matlab/opgave3.m}
-
-\newpage
-\subsection{Spline Code}\label{sec:generalspline}
-
-\subsubsection{KKB Spline}\label{sec:codekkb}
-\lstinputlisting[language=Matlab]{../Matlab/kkbSpline.m}
-
-\newpage
-
-\subsubsection{deBoor.m}\label{sec:codedb}
-\lstinputlisting[language=Matlab]{../Matlab/deBoor.m}
-
-\subsubsection{plotBSpline.m}\label{sec:codeplotb}
-\lstinputlisting[language=Matlab]{../Matlab/plotBSpline.m}
-
-\newpage
-
-\subsubsection{knotPoints.m}\label{sec:codeknot}
-\lstinputlisting[language=Matlab]{../Matlab/knotPoints.m}
-
-\subsubsection{binarySearch.m}\label{sec:codebinary}
-\lstinputlisting[language=Matlab]{../Matlab/binarySearch.m}
-
-\subsubsection{Opgave5.m}\label{sec:code5}
-\lstinputlisting[language=Matlab]{../Matlab/opgave5.m}
-
-\subsubsection{Opgave6.m}\label{sec:code6}
-\lstinputlisting[language=Matlab]{../Matlab/opgave6.m}
-
-\subsubsection{Opgave7.m}\label{sec:code7}
-\lstinputlisting[language=Matlab]{../Matlab/opgave7.m}
-
 
 \end{document}
