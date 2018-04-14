@@ -25,14 +25,14 @@ function z = kkbSpline(tArr,xArr,fArr,yArr,k)
     
     M(row,j) = 1;
     for l = 1:k
-      M(row,j-l) = (tArr(j+1) - x)/(tArr(j+1) - tArr(j-l+1))*M(row,j-l+1);
+      M(row,j-l) = (tArr(j+1)-x)/(tArr(j+1)-tArr(j-l+1))*M(row,j-l+1);
 
       for i = j-l+1:j-1
-        M(row,i) = (x - tArr(i))/(tArr(i+l) - tArr(i))*M(row,i) ...
-            + (tArr(i+l+1) - x)/(tArr(i+l+1) - tArr(i+1))*M(row,i+1);
+        M(row,i) = (x-tArr(i))/(tArr(i+l)-tArr(i))*M(row,i) ...
+            + (tArr(i+l+1)-x)/(tArr(i+l+1)-tArr(i+1))*M(row,i+1);
       end
 
-      M(row,j) = (x - tArr(j))/(tArr(j+l) - tArr(j))*M(row,j);
+      M(row,j) = (x-tArr(j))/(tArr(j+l)-tArr(j))*M(row,j);
     end
   end
 
