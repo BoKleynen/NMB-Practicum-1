@@ -10,7 +10,7 @@
 \usepackage[dutch]{babel}
 \usepackage{fixltx2e}
 
-\renewcommand{\lstlistingname}{algoritme}
+\renewcommand{\lstlistingname}{Algoritme}
 \renewcommand{\lstlistlistingname}{Lijst van \lstlistingname n}
 
 \lstset{
@@ -30,7 +30,7 @@
 
 % Title Page stuff
 \title{Practicum Numerieke Modelering en Benadering}
-\author{Wim Kunnen \\ Bo Kleynen}
+\author{Wim Kunnen, r0629332 \\ Bo Kleynen, r0624034}
 \date{zondag 15 april 2018 }
 
 % Actual document
@@ -82,8 +82,8 @@ Met randvoorwaarden van de vorm:
 % OPGAVE 1
 \opgave{1: Implementatie en controle}\label{sec:oef1}
 De implementatie van het gegeven algoritme
-\lstinputlisting[caption=pde]{../Matlab/PDE.m}
-De cocrectheid van de implementatie werd geverifieerd door het oplossen van \ref{eq:poisson} voor de volgende gevallen:
+\lstinputlisting[caption=PDE]{../Matlab/PDE.m}
+De correctheid van de implementatie werd geverifieerd door het oplossen van \ref{eq:poisson} voor de volgende gevallen:
 \begin{itemize}
 	\item $\nabla^2u(x,y)=0$ met randvoorwaarden $u_w(y)=u_o(y)=u_z(x)=u_n(x)=0$ met als exacte oplossing $u(x,y) = 1$
 	\item $\nabla^2u(x,y)=0$ met randvoorwaarden $u_w(y)=1+y$, $u_o(y)=2+y$, $u_z(x)=1+x$ en $u_n(x)=2+x$ met als exacte oplossing $u(x,y) = 1 + x + y$
@@ -145,7 +145,7 @@ Met randvoorwaarden:
 Onderstaand stuk code toont het matlab script gebruikt om dit randwaardeprobleem op te lossen.
 \lstinputlisting[language=Matlab, caption=script opgave 3]{../Matlab/opgave3.m}
 
-figuur \ref{fig:Contour3} toont de contour plot en figuur \ref{fig:Plot3} het 3 dimensionale oppervlak van de benaderende oplossing.
+Figuur \ref{fig:Contour3} toont de contour plot en figuur \ref{fig:Plot3} het 3 dimensionale oppervlak van de benaderende oplossing.
 \newpage
 % Contour figuur
 \begin{figure}[H]
@@ -168,7 +168,7 @@ figuur \ref{fig:Contour3} toont de contour plot en figuur \ref{fig:Plot3} het 3 
 
 % Splines stuff
 \section{Splines}\label{sec:splines}
-Dit deel behandelt het opstellen van een kleinste-kwadraten benadering met behulp van splinefuncties. Eerst komt de implementatie van een efficiente methode voor het opstellen van een kleinste-kwadraten spline benadering in matlab aan bod daarna volgt de implementatie van het algoritme van de Boor om deze benadering te evalueren en tot slot een bespreking van opgaven 5 tot en met 7.
+Dit deel behandelt het opstellen van een kleinste-kwadraten benadering met behulp van splinefuncties. Eerst komt de implementatie van een effici\"ente methode voor het opstellen van een kleinste-kwadraten spline benadering in matlab aan bod daarna volgt de implementatie van het algoritme van de Boor om deze benadering te evalueren en tot slot een bespreking van opgaven 5 tot en met 7.
 
 % OPGAVE 4
 \subsection{Implementatie van de algoritmen}
@@ -199,7 +199,7 @@ Gegeven een een splinefunctie die een lineaire combinatie is van $n+k$ B-splines
 \begin{equation}\label{eq:deboor}
 	s(x) = \sum\limits_{i=-k}^{n-1} c_iN_{i, k+1}(x)
 \end{equation}
-Kan daze zeer efficient geevalueerd worden, gebruik makend van het algoritme van de Boor:
+Kan deze zeer effici\"ent ge\"evalueerd worden, gebruik makend van het algoritme van de Boor:
 Zij $x\in[t{j}, t_{j+1})$ dan geldt $s(x)=c_{j}^{[k]}$ met $c_i^{[0]} = c_i$ en $c_i^{[r]}$ wordt gevonden uit:
 \begin{equation}\label{eq:deboorcoef}
 	c_i^{[\, r]\, } = \alpha_{i,r} c_i^{[\, r-1]\, } + (1-\alpha_{i,r})c_{i-1}^{[\, r-1]\, } \quad met \quad \alpha_{i,r} = \frac{x-t_i}{t_{i+k+1-r}-t_i}
@@ -241,7 +241,6 @@ We namen eerst een benadering op basis van 20 equidistante knooppunten op het in
 
 Daarna werd de rechthoekpuls benaderd door middel van 20 knooppunten die dicht bij de flanken van de puls te kiezen. Deze flanken vari\"eren zeer sterk, waardoor deze moeilijk te benaderen zijn. Deze benadering werd in het groen getoond in figuur (\ref{fig:rectan}). Figuur \ref{fig:rectanZoom} toont dezelfde functies maar met x beperkt in [-0.52, -0.48]. \\
 
-De Matlab code en de daarin gebruikte knooppunt rijen zij te vinden in Opgave6.m op pagina \pageref{sec:code6}.
 \begin{figure}[H]
 	\begin{center} 
 		\includegraphics[width=0.4\textwidth]{Rectan.eps}
@@ -263,7 +262,7 @@ De Matlab code en de daarin gebruikte knooppunt rijen zij te vinden in Opgave6.m
 \opgave{7: Ruis}\label{sec:oef7}
 De ruis wordt gemodelleerd aan de hand van (\ref{eq:f}) waaraan een willekeurige component wordt toegevoegd (\ref{eq:noise}).
 \begin{equation}\label{eq:f}
-	f_{ruis}(x) = \frac{\sin{(20x)}}{100x^2+5}
+	f(x) = \frac{\sin{(20x)}}{100x^2+5}
 \end{equation}
 \begin{equation}\label{eq:noise}
 	f_{ruis}(x) = \frac{\sin{(20x)}}{100x^2+5} + 0.04*randn(size(x))
@@ -283,8 +282,6 @@ Het minimale residu van de benaderingen wordt weergegeven in tabel \ref{tab:spli
 \end{table}
 
 In figuur \ref{fig:errorkkb} werd norm(f\textsubscript{ruis} - z) (blauw) en norm(f - z) (rood) uitgezet in functie van het aantal equidistante knooppunten, met z de kkb van f\textsubscript{ruis}. Hierin is er een minimum, die, zoals reeds vermeld, in tabel \ref{tab:splineError} staan. In figuur \ref{fig:plotNoNoise} staan f(x) (rood) en de kkb van f(x) (blauw) geplot. In figuur \ref{fig:plotNoise} staan f\textsubscript{ruis}(x) (rood) en de overeenkomstige kkb (blauw). De figuren tonen ook aan dat de grootste benaderingsfouten zich voordoen waar de functie het meest varieert, zoals verwacht. Dit kan verholpen worden door in plaats van equidistante knooppunten, de knooppunten beter te verdelen in de buurt van de variaties. Dit kan echter enkel in de functie waar nog geen ruis aanwezig is, aangezien de variaties door ruis niet voorspelt kunnen worden. \\
-
-De Matlab code voor dit probleem is te vinden in Opgave7.m op pagina \pageref{sec:code7}.
 
 \begin{figure}[H]
 	\begin{center} 
